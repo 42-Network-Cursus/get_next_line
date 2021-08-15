@@ -6,7 +6,7 @@
 /*   By: cwastche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/18 13:20:40 by cwastche          #+#    #+#             */
-/*   Updated: 2021/08/04 13:38:14 by cwastche         ###   ########.fr       */
+/*   Updated: 2021/08/15 13:11:29 by cwastche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+
+#include <stdio.h>
 
 # define FD_MAX 1024
 

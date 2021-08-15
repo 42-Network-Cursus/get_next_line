@@ -1,10 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cwastche </var/mail/cwastche>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/15 12:52:28 by cwastche          #+#    #+#             */
+/*   Updated: 2021/08/15 13:15:55 by cwastche         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 static int	check_line(char	*str, int rret)
 {
+	if (!rret)
+		return (0);
 	if (!str)
 		return (1);
-	if (ft_strchr(str, '\n') || rret == 0)
+	if (ft_strchr(str, '\n'))
 		return (0);
 	return (1);
 }
@@ -43,6 +57,11 @@ static char	*return_line(int fd, char **s)
 	char	*line;
 	char	*tmp;
 
+	if (!s[fd])
+	{
+		printf("In !s[fd]\n");
+		return (NULL);
+	}
 	i = 0;
 	while ((s[fd][i] != '\n') && s[fd][i])
 		i++;
@@ -61,9 +80,10 @@ static char	*return_line(int fd, char **s)
 
 char	*get_next_line(int fd)
 {
-	static char	*s[FD_MAX] = {0};
+	static char	*s[FD_MAX];
 	char		buff[BUFFER_SIZE + 1];
 	int			rret;
+	char	*test;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -74,5 +94,9 @@ char	*get_next_line(int fd)
 		if (rret == -1)
 			return (NULL);
 	}
-	return (return_line(fd, s));
+	printf("s[fd] before ret_line = %s\n", s[fd]);
+	test = return_line(fd, s);
+	printf("test = %s\n", test);
+	return (test);
+	//return (return_line(fd, s));
 }

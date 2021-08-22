@@ -16,6 +16,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+#ifndef BUFFER_SIZE
+# define BUFFERSIZE 42
+#endif
 #include <stdio.h>
 
 # define FD_MAX 1024

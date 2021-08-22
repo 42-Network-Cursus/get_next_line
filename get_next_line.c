@@ -14,7 +14,7 @@
 
 static int	check_line(char	*str, int rret)
 {
-	if (!rret)
+	if (rret == 0)
 		return (0);
 	if (!str)
 		return (1);
@@ -43,11 +43,12 @@ static int	new_read(int fd, char *buff, char **s)
 	else
 	{
 		tmp = ft_strjoin(s[fd], buff);
+		free(s[fd]);
 		if (tmp == NULL)
 			return (-1);
-		free(s[fd]);
 		s[fd] = tmp;
 	}
+	buff = 0;
 	return (i);
 }
 
@@ -58,10 +59,7 @@ static char	*return_line(int fd, char **s)
 	char	*tmp;
 
 	if (!s[fd])
-	{
-		printf("In !s[fd]\n");
 		return (NULL);
-	}
 	i = 0;
 	while ((s[fd][i] != '\n') && s[fd][i])
 		i++;
@@ -72,9 +70,13 @@ static char	*return_line(int fd, char **s)
 		return (NULL);
 	tmp = ft_strdup(s[fd] + i);
 	if (tmp == NULL)
+	{
+		free(line);
 		return (NULL);
+	}
 	free(s[fd]);
-	s[fd] = tmp;
+//	if (!tmp)
+		s[fd] = tmp;
 	return (line);
 }
 
@@ -83,20 +85,17 @@ char	*get_next_line(int fd)
 	static char	*s[FD_MAX];
 	char		buff[BUFFER_SIZE + 1];
 	int			rret;
-	char	*test;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	rret = new_read(fd, buff, s);
+	if (rret <= 0)
+		return (NULL);
 	while (check_line(s[fd], rret))
 	{
 		rret = new_read(fd, buff, s);
 		if (rret == -1)
 			return (NULL);
 	}
-	printf("s[fd] before ret_line = %s\n", s[fd]);
-	test = return_line(fd, s);
-	printf("test = %s\n", test);
-	return (test);
-	//return (return_line(fd, s));
+	return (return_line(fd, s));
 }

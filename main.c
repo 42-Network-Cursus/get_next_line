@@ -5,13 +5,12 @@
 
 int main(int argc, char *argv[])
 {
-	int i = 3;
 	int fd = open("text", O_RDONLY);
 
 	char	*s = get_next_line(fd);
-	while (*s)
+	while (s)
 	{
-		printf("%s", s);
+		printf("%s\n", s);
 		s = get_next_line(fd);
 	}
 	return (0);

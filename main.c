@@ -8,10 +8,15 @@ int main(int argc, char *argv[])
 	int fd = open("text", O_RDONLY);
 
 	char	*s = get_next_line(fd);
-	while (s)
-	{
-		printf("%s\n", s);
+		printf("%s", s);
 		s = get_next_line(fd);
-	}
+		printf("%s", s);
+		s = get_next_line(fd);
+		printf("%s", s);
+		s = get_next_line(fd);
+		printf("%s", s);
+		s = get_next_line(fd);
+		printf("%s", s);
+		s = get_next_line(fd);
 	return (0);
 }

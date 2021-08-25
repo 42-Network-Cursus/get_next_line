@@ -12,71 +12,31 @@
 
 #include "get_next_line.h"
 
-static int	check_line(char	*str, int rret)
-{
-	if (rret == 0)
-		return (0);
-	if (!str)
-		return (1);
-	if (ft_strchr(str, '\n'))
-		return (0);
-	return (1);
-}
-
-static int	new_read(int fd, char *buff, char **s)
-{
-	int		i;
-	char	*tmp;
-
-	i = read(fd, buff, BUFFER_SIZE);
-	if (i < 0)
-		return (-1);
-	if (i == 0)
-		return (0);
-	buff[i] = 0;
-	if (!s[fd])
-	{
-		s[fd] = ft_strdup(buff);
-		if (s[fd] == NULL)
-			return (-1);
-	}
-	else
-	{
-		tmp = ft_strjoin(s[fd], buff);
-		free(s[fd]);
-		if (tmp == NULL)
-			return (-1);
-		s[fd] = tmp;
-	}
-	buff = 0;
-	return (i);
-}
-
 static char	*return_line(int fd, char **s)
 {
 	size_t	i;
 	char	*line;
 	char	*tmp;
 
-	if (!s[fd])
-		return (NULL);
 	i = 0;
 	while ((s[fd][i] != '\n') && s[fd][i])
 		i++;
-	if (s[fd][i] == '\n')
-		i++;
-	line = ft_substr(s[fd], 0, i);
-	if (line == NULL)
-		return (NULL);
-	tmp = ft_strdup(s[fd] + i);
-	if (tmp == NULL)
+	if (!s[fd][i])
 	{
-		free(line);
-		return (NULL);
+		line = ft_strdup(s[fd]);
+		free(s[fd]);
+		s[fd] = 0;
 	}
-	free(s[fd]);
-//	if (!tmp)
-		s[fd] = tmp;
+	else
+	{
+		tmp = ft_strdup(&s[fd][i + 1]);
+		line = ft_substr(s[fd], 0, i + 1);
+		free(s[fd]);
+		s[fd] = 0;
+		if (*tmp)
+			s[fd] = ft_strdup(tmp);
+		free(tmp);
+	}
 	return (line);
 }
 
@@ -84,18 +44,26 @@ char	*get_next_line(int fd)
 {
 	static char	*s[FD_MAX];
 	char		buff[BUFFER_SIZE + 1];
-	int			rret;
+	char		*tmp;
+	ssize_t		read_ret;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > FD_MAX)
 		return (NULL);
-	rret = new_read(fd, buff, s);
-	if (rret <= 0)
-		return (NULL);
-	while (check_line(s[fd], rret))
+	read_ret = read(fd, buff, BUFFER_SIZE);
+	while (read_ret > 0)
 	{
-		rret = new_read(fd, buff, s);
-		if (rret == -1)
-			return (NULL);
+		buff[read_ret] = 0;
+		if (!s[fd])
+			s[fd] = ft_strdup("");
+		tmp = ft_strdup(s[fd]);
+		free(s[fd]);
+		s[fd] = ft_strjoin(tmp, buff);
+		free(tmp);
+		if (ft_strchr(s[fd], '\n'))
+			break ;
+		read_ret = read(fd, buff, BUFFER_SIZE);
 	}
+	if (read_ret < 0 || (read_ret == 0 && !s[fd]))
+		return (NULL);
 	return (return_line(fd, s));
 }

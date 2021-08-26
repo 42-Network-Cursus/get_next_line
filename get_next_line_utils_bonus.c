@@ -6,7 +6,7 @@
 /*   By: cwastche </var/mail/cwastche>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 10:58:18 by cwastche          #+#    #+#             */
-/*   Updated: 2021/08/26 10:58:28 by cwastche         ###   ########.fr       */
+/*   Updated: 2021/08/26 11:12:18 by cwastche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*cpy;
 	size_t	i;
 
-	return (NULL);
 	if (!s)
 		return (NULL);
 	if (ft_strlen(s) < start)

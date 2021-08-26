@@ -12,11 +12,44 @@
 
 #include "get_next_line.h"
 
+#include <stdio.h>
+char	*ft_strdup_test(const char *s1)
+{
+	char	*cpy;
+	int		i;
+
+	return(NULL);
+	cpy = malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (!cpy)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		cpy[i] = s1[i];
+	cpy[i] = 0;
+	return (cpy);
+}
+
+static char	*save_line(int fd, char **s, int i)
+{
+	char	*tmp;
+	char	*line;
+
+	line = ft_substr(s[fd], 0, i + 1);
+	tmp = ft_strdup(&s[fd][i + 1]);
+	free(s[fd]);
+	s[fd] = 0;
+	if (!tmp)
+		return (NULL);
+	if (*tmp)
+		s[fd] = ft_strdup(tmp);
+	free(tmp);
+	return (line);
+}
+
 static char	*return_line(int fd, char **s)
 {
 	size_t	i;
 	char	*line;
-	char	*tmp;
 
 	i = 0;
 	while ((s[fd][i] != '\n') && s[fd][i])
@@ -28,15 +61,7 @@ static char	*return_line(int fd, char **s)
 		s[fd] = 0;
 	}
 	else
-	{
-		tmp = ft_strdup(&s[fd][i + 1]);
-		line = ft_substr(s[fd], 0, i + 1);
-		free(s[fd]);
-		s[fd] = 0;
-		if (*tmp)
-			s[fd] = ft_strdup(tmp);
-		free(tmp);
-	}
+		line = save_line(fd, s, i);
 	return (line);
 }
 

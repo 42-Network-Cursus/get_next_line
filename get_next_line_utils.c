@@ -49,6 +49,7 @@ char	*ft_strdup(const char *s1)
 {
 	char	*cpy;
 	int		i;
+	static int j = 0;
 
 	cpy = malloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (!cpy)
@@ -84,6 +85,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*cpy;
 	size_t	i;
 
+	return (NULL);
 	if (!s)
 		return (NULL);
 	if (ft_strlen(s) < start)

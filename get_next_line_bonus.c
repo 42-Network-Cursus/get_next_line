@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cwastche </var/mail/cwastche>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/15 12:52:28 by cwastche          #+#    #+#             */
-/*   Updated: 2021/08/26 10:55:29 by cwastche         ###   ########.fr       */
+/*   Created: 2021/08/26 10:57:15 by cwastche          #+#    #+#             */
+/*   Updated: 2021/08/26 10:57:30 by cwastche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*return_line(int fd, char **s)
 {

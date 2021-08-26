@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
+#include "wraloc.h"
 #include <stdio.h>
 char	*ft_strdup_test(const char *s1)
 {

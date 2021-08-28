@@ -6,7 +6,7 @@
 /*   By: cwastche </var/mail/cwastche>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 12:52:28 by cwastche          #+#    #+#             */
-/*   Updated: 2021/08/28 22:34:46 by cwastche         ###   ########.fr       */
+/*   Updated: 2021/08/28 22:42:04 by cwastche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*save_line(int fd, char **s, int i)
 	char	*line;
 
 	line = ft_substr(s[fd], 0, i + 1);
-	tmp = ft_strdup_test(&s[fd][i + 1]);
+	tmp = ft_strdup(&s[fd][i + 1]);
 	free(s[fd]);
 	s[fd] = 0;
 	if (!tmp)
